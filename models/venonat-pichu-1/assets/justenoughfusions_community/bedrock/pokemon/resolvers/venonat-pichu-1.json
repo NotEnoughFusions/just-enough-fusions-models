@@ -1,0 +1,21 @@
+{
+  "species": "cobblemon:pichu",
+  "order": 1000,
+  "variations": [
+    {
+      "aspects": [
+        "justenoughfusions.model/venonat-pichu-1"
+      ],
+      "poser": "justenoughfusions_community:venonat-pichu-1",
+      "model": "justenoughfusions_community:venonat-pichu-1.geo",
+      "texture": "justenoughfusions_community:textures/fusions/venonat-pichu-1.png",
+      "layers": [
+        {
+          "name": "justenoughfusions_glow",
+          "texture": "justenoughfusions_community:textures/fusions/venonat-pichu-1_glow.png",
+          "emissive": true
+        }
+      ]
+    }
+  ]
+}
