@@ -1,0 +1,51 @@
+name: Moderator commands
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: models-repo
+  cancel-in-progress: false
+
+jobs:
+  moderate:
+    # Only the repo owner, organisation members and collaborators can moderate.
+    if: >-
+      startsWith(github.event.comment.body, '/') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.run.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run the command
+        id: run
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: python3 scripts/moderate.py
+
+      - name: Save and reply
+        if: steps.run.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "jef-models-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A models trusted.txt
+          git commit -m "Moderation on #$ISSUE_NUMBER" || true
+          git pull --rebase
+          git push
+          gh issue comment "$ISSUE_NUMBER" --body-file result.md
+
+  publish:
+    needs: moderate
+    if: needs.moderate.outputs.changed == 'true'
+    uses: ./.github/workflows/publish.yml

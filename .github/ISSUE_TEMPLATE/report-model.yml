@@ -1,0 +1,27 @@
+name: Report a model
+description: Tell us about a model that's inappropriate, stolen or broken.
+title: "Report model"
+labels: ["report"]
+body:
+  - type: input
+    id: model_id
+    attributes:
+      label: Model id
+      description: Filled in automatically when you use the Report button in game.
+    validations:
+      required: true
+  - type: dropdown
+    id: reason
+    attributes:
+      label: Reason
+      options:
+        - Inappropriate
+        - Stolen / not made by the uploader
+        - Broken or glitchy
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details (optional)

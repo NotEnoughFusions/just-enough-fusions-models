@@ -1,0 +1,50 @@
+name: Count reports
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: models-repo
+  cancel-in-progress: false
+
+jobs:
+  count:
+    if: contains(github.event.issue.labels.*.name, 'report')
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.count.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count open reports for this model
+        id: count
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          MODEL_ID=$(printf '%s' "$ISSUE_BODY" | python3 -c "import re,sys; b=sys.stdin.read(); m=re.search(r'### Model id\s+([a-z0-9_-]{1,64})', b); print(m.group(1) if m else '')")
+          if [ -z "$MODEL_ID" ]; then echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          OPEN_REPORTS=$(gh issue list --label report --state open --limit 200 --json body \
+            --jq "[.[] | select(.body | test(\"### Model id\\\\s+${MODEL_ID}\\\\b\"))] | length")
+          echo "Model $MODEL_ID has $OPEN_REPORTS open reports"
+          MODEL_ID="$MODEL_ID" OPEN_REPORTS="$OPEN_REPORTS" python3 scripts/count_reports.py
+
+      - name: Save
+        if: steps.count.outputs.changed == 'true'
+        run: |
+          git config user.name "jef-models-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A models
+          git commit -m "Hide reported model"
+          git pull --rebase
+          git push
+
+  publish:
+    needs: count
+    if: needs.count.outputs.changed == 'true'
+    uses: ./.github/workflows/publish.yml

@@ -1,0 +1,2 @@
+# GitHub usernames whose models go live without review, one per line.
+# Moderators can also comment "/trust username" on any issue.

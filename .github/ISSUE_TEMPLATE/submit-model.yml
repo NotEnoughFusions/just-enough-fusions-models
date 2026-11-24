@@ -1,0 +1,68 @@
+name: Submit a fusion model
+description: Share a 3D model for one fusion (a head + body pair, a triple fusion or Omnieon).
+title: "Model submission"
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for making a model! Make it in **Blockbench** as a *Bedrock Entity* model, the same way Cobblemon models are made.
+
+        Put these files in **one .zip** and drag it into the box below:
+        - `something.geo.json`: the model (one bone should be called `head` so it can look around)
+        - `something.png`: its texture (max 512 × 512)
+        - optional `something.animation.json`: animations named `idle`, `walk`, `fly`, `hover`, `sleep`, `battle_idle`, `faint`, `cry`, `blink` or `quirk_<anything>` (see the README). For riding, add `seat_1` locators where riders sit (added on the body for you if missing)
+        - optional `something_glow.png`: a glow layer, same size as the texture
+
+        File names don't matter, we rename everything.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Fusion type
+      description: A normal fusion of two Pokémon, a triple fusion (a fusion with a third Pokémon as its core), or Omnieon (Eevee fused with all eight of its evolutions).
+      options:
+        - Two Pokémon
+        - Triple fusion
+        - Omnieon
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: head
+    attributes:
+      label: Head species
+      description: The Pokémon that gives the head, e.g. `bulbasaur` (or `namespace:name` for addon species). Leave empty for Omnieon.
+      placeholder: bulbasaur
+  - type: input
+    id: body
+    attributes:
+      label: Body species
+      description: The Pokémon that gives the body, e.g. `charmander`. Leave empty for Omnieon.
+      placeholder: charmander
+  - type: input
+    id: core
+    attributes:
+      label: Core species (triple fusions only)
+      description: The third Pokémon, fused in as the core, e.g. `squirtle`. Leave empty otherwise.
+      placeholder: squirtle
+  - type: textarea
+    id: files
+    attributes:
+      label: Model zip
+      description: Drag your .zip file here.
+    validations:
+      required: true
+  - type: input
+    id: credit
+    attributes:
+      label: Name to credit (optional)
+      description: Shown in game. Leave empty to use your GitHub name.
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Rules
+      options:
+        - label: I made this model myself (or have permission to share it).
+          required: true
+        - label: It's suitable for all ages.
+          required: true

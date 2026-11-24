@@ -1,0 +1,28 @@
+name: First-time setup
+
+# Run this once from the Actions tab after creating the repository.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create labels
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create submission --color 7A5CFF --description "A model submission" --force
+          gh label create report --color D93F0B --description "A report about a model" --force
+          gh label create accepted --color 0E8A16 --description "Submission added" --force
+          gh label create needs-fix --color FBCA04 --description "Submission needs a fix" --force
+          gh label create bug --color B60205 --description "A bug in the mod" --force
+
+  publish:
+    needs: setup
+    uses: ./.github/workflows/publish.yml

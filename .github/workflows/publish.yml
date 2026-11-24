@@ -1,0 +1,38 @@
+name: Publish models
+
+on:
+  push:
+    branches: [main]
+    paths: ['models/**']
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-models
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Build the index and zips
+        run: python3 scripts/build_release.py
+
+      - name: Upload to the "models" release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release view models >/dev/null 2>&1 || \
+            gh release create models --title "Community models" --notes "Downloaded automatically by the Just Enough Fusions mod. Don't edit by hand." --latest=false
+          gh release upload models dist/* --clobber
+          # Remove zips for models that were hidden or deleted.
+          for asset in $(gh release view models --json assets --jq '.assets[].name'); do
+            if [ ! -f "dist/$asset" ]; then gh release delete-asset models "$asset" -y; fi
+          done

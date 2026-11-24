@@ -1,0 +1,55 @@
+name: Report a bug
+description: Something in Just Enough Fusions is broken, crashes or doesn't work as it should.
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping test Just Enough Fusions! The **Report a bug** button in the Fusion Handbook fills in the versions for you.
+        For a problem with one community model, use **Report a model** instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What went wrong, and what you expected to happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How can we make it happen?
+      description: The steps that lead to it, if you know them.
+      placeholder: |
+        1. Put a Bidoof and a Pikachu in the Fusion Machine
+        2. Press Fuse
+        3. ...
+  - type: input
+    id: mod_version
+    attributes:
+      label: Just Enough Fusions version
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Minecraft, NeoForge and Cobblemon versions
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where were you playing?
+      options:
+        - Singleplayer
+        - On a server
+        - Not sure
+  - type: textarea
+    id: mods
+    attributes:
+      label: Other mods
+      description: Filled in by the button. Add any you think might matter.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Crash report or log
+      description: For a crash, attach the file from .minecraft/crash-reports (drag it in), or paste latest.log from .minecraft/logs.
+      render: text
