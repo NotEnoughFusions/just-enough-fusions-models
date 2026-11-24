@@ -1,0 +1,78 @@
+{
+  "portraitScale": 1.0,
+  "portraitTranslation": [
+    0,
+    -0.6,
+    0
+  ],
+  "profileScale": 0.85,
+  "profileTranslation": [
+    0,
+    0.35,
+    0
+  ],
+  "rootBone": "root",
+  "animations": {
+    "faint": "q.bedrock_primary('bidoof-bidoof-2', 'faint', q.curve('one'))",
+    "cry": "q.bedrock_stateful('bidoof-bidoof-2', 'cry')"
+  },
+  "poses": {
+    "standing": {
+      "poseTypes": [
+        "STAND",
+        "NONE",
+        "PORTRAIT",
+        "PROFILE",
+        "FLOAT",
+        "HOVER"
+      ],
+      "animations": [
+        "q.look('head')",
+        "q.bedrock('bidoof-bidoof-2', 'idle')"
+      ],
+      "quirks": [
+        "q.bedrock_quirk('bidoof-bidoof-2', 'blink')",
+        "q.bedrock_quirk('bidoof-bidoof-2', 'quirk_double_biceps')",
+        "q.bedrock_quirk('bidoof-bidoof-2', 'quirk_lat_spread')",
+        "q.bedrock_quirk('bidoof-bidoof-2', 'quirk_pec_bounce')",
+        "q.bedrock_quirk('bidoof-bidoof-2', 'quirk_sniff')"
+      ]
+    },
+    "walking": {
+      "poseTypes": [
+        "WALK",
+        "SWIM",
+        "FLY"
+      ],
+      "animations": [
+        "q.look('head')",
+        "q.bedrock('bidoof-bidoof-2', 'walk')"
+      ],
+      "quirks": [
+        "q.bedrock_quirk('bidoof-bidoof-2', 'blink')"
+      ]
+    },
+    "sleep": {
+      "poseTypes": [
+        "SLEEP"
+      ],
+      "animations": [
+        "q.bedrock('bidoof-bidoof-2', 'sleep')"
+      ]
+    },
+    "battle-standing": {
+      "poseTypes": [
+        "STAND"
+      ],
+      "isBattle": true,
+      "animations": [
+        "q.look('head')",
+        "q.bedrock('bidoof-bidoof-2', 'battle_idle')"
+      ],
+      "quirks": [
+        "q.bedrock_quirk('bidoof-bidoof-2', 'blink')",
+        "q.bedrock_quirk('bidoof-bidoof-2', 'battle_quirk_flex')"
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "species": "cobblemon:bidoof",
+  "order": 1000,
+  "variations": [
+    {
+      "aspects": [
+        "justenoughfusions.model/bidoof-bidoof-2"
+      ],
+      "poser": "justenoughfusions_community:bidoof-bidoof-2",
+      "model": "justenoughfusions_community:bidoof-bidoof-2.geo",
+      "texture": "justenoughfusions_community:textures/fusions/bidoof-bidoof-2.png",
+      "layers": []
+    }
+  ]
+}
