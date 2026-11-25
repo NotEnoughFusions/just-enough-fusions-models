@@ -1,0 +1,15 @@
+{
+  "species": "cobblemon:farfetchd",
+  "order": 1000,
+  "variations": [
+    {
+      "aspects": [
+        "justenoughfusions.model/honedge-farfetchd-4"
+      ],
+      "poser": "justenoughfusions_community:honedge-farfetchd-4",
+      "model": "justenoughfusions_community:honedge-farfetchd-4.geo",
+      "texture": "justenoughfusions_community:textures/fusions/honedge-farfetchd-4.png",
+      "layers": []
+    }
+  ]
+}
